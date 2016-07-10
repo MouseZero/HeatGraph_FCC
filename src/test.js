@@ -50,6 +50,10 @@ function drawGraph(data){
         .rangeRound( [GRAPH_Y, GRAPH_HEIGHT + GRAPH_Y] )
         .domain(MONTHS)
 
+    const xScale = d3.scaleLinear()
+        .domain( [ data.monthlyVariance[0].year, data.monthlyVariance[data.monthlyVariance.length -1].year ] )
+        .rangeRound( [GRAPH_X, GRAPH_WIDTH + GRAPH_X] )
+
     //------- Content -------------
     const canvas = d3.select('#graph').append('svg')
         .attr('width', CANVAS_WIDTH)
@@ -83,6 +87,10 @@ function drawGraph(data){
         .attr( 'transform', 'translate( '+GRAPH_X+', 0 )' )
         .call(  d3.axisLeft( yScaleAxis )  )
 
+    const callXAxis = canvas
+        .append('g')
+        .attr( 'transform', 'translate(0,'+( GRAPH_HEIGHT+GRAPH_Y )+')' )
+        .call( d3.axisBottom( xScale ) )
 }
 
 window.onload = makeGraph()
