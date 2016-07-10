@@ -1,11 +1,12 @@
 const URL = 'https://raw.githubusercontent.com/FreeCodeCamp/ProjectReferenceData/master/global-temperature.json'
-const SQUARE_WIDTH = 10
-const SQUARE_HEIGHT = 20
-const CANVAS_WIDTH = 700
+const CANVAS_WIDTH = 1000
 const CANVAS_HEIGHT = 600
-const GRAPH_WIDTH = 500
-const GRAPH_HEIGHT = 500
+const GRAPH_WIDTH = 700
+const GRAPH_X = 50
+const GRAPH_Y = 50
+const GRAPH_HEIGHT = 400
 const MONTHS_PER_YEAR = 12
+const MONTHS = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ]
 
 function makeGraph(){
     fetch(URL)
@@ -14,12 +15,12 @@ function makeGraph(){
 }
 
 function drawGraph(data){
-    console.log(JSON.stringify(data, null, 2))
+    //console.log(JSON.stringify(data, null, 2))
     const BASE = data.baseTemperature
-    let dataInfo = data.monthlyVariance.reduce( (prev, elem)=>{
-        var min = parseFloat( Math.min(prev.min, elem.variance + BASE) )
-        var max = parseFloat( Math.max(prev.max, elem.variance + BASE) )
-        var newInfo = {
+    const dataInfo = data.monthlyVariance.reduce( (prev, elem)=>{
+        const min = parseFloat( Math.min(prev.min, elem.variance + BASE) )
+        const max = parseFloat( Math.max(prev.max, elem.variance + BASE) )
+        const newInfo = {
             min: Math.round(min * 100) / 100,
             max: Math.round(max * 100) / 100
         }
@@ -28,41 +29,59 @@ function drawGraph(data){
     dataInfo.years = data.monthlyVariance.length / MONTHS_PER_YEAR
     dataInfo.blockwidth = GRAPH_WIDTH / dataInfo.years
 
-    let colorTo0Through1 = d3.scaleLinear()
+    //------- Scalers -------------
+
+    const colorTo0Through1 = d3.scaleLinear()
         .domain([ dataInfo.min, dataInfo.max ])
         .range( [ -0.2, 1.2 ] )
 
-    let colorScaleInterpolater = d3.scaleSequential( d3.interpolateViridis );
+    const colorScaleInterpolater = d3.scaleSequential( d3.interpolateViridis );
 
-    let colorScale = function(d){
+    const colorScale = function(d){
         return colorScaleInterpolater( colorTo0Through1(d) )
     }
 
-    let canvas = d3.select('#graph').append('svg')
+    const yScale = d3.scaleLinear()
+    .domain( [ 0, 12 ] )
+    .range( [ GRAPH_Y, GRAPH_HEIGHT + GRAPH_Y ] )
+
+    //------- Content -------------
+
+    const canvas = d3.select('#graph').append('svg')
         .attr('width', CANVAS_WIDTH)
         .attr('height', CANVAS_HEIGHT)
         .append('g')
 
-    let heatBoxes = canvas
+    const heatBoxes = canvas
         .selectAll('rect')
         .data(data.monthlyVariance)
         .enter()
         .append('rect')
 
-    let heatBoxAttr = heatBoxes
+    const heatBoxAttr = heatBoxes
         .attr('width', dataInfo.blockwidth)
-        .attr('height', SQUARE_HEIGHT)
+        .attr('height', GRAPH_HEIGHT / 12)
         .attr('fill', d=>{
             var color = colorScale( d.variance + BASE)
             return color
         })
-        .attr('y', d=>d.month * SQUARE_HEIGHT)
+        .attr( 'y', d=> yScale( d.month - 1 )  )
         .attr('x', ( d, i )=>{
             let row = i? i/MONTHS_PER_YEAR : 0
             row = Math.floor(row)
-            let x = row * dataInfo.blockwidth
+            const x = row * dataInfo.blockwidth + GRAPH_X
             return x
         })
+
+    //------- Axes --------------
+
+    const yAxis = d3.axisLeft()
+        .scale(yScale)
+
+    const callYAxis = canvas
+        .append('g')
+        .attr( 'transform', 'translate( '+GRAPH_X+', 0 )' )
+        .call(yAxis)
 
 }
 
