@@ -2,7 +2,7 @@ const URL = 'https://raw.githubusercontent.com/FreeCodeCamp/ProjectReferenceData
 const CANVAS_WIDTH = 1000
 const CANVAS_HEIGHT = 600
 const GRAPH_WIDTH = 700
-const GRAPH_X = 50
+const GRAPH_X = 75
 const GRAPH_Y = 50
 const GRAPH_HEIGHT = 400
 const MONTHS_PER_YEAR = 12
@@ -28,6 +28,7 @@ function drawGraph(data){
     }, {min: Number.MAX_VALUE, max: Number.MIN_VALUE, yearCount: 0})
     dataInfo.years = data.monthlyVariance.length / MONTHS_PER_YEAR
     dataInfo.blockwidth = GRAPH_WIDTH / dataInfo.years
+    dataInfo.blockheight = GRAPH_HEIGHT / MONTHS_PER_YEAR
 
     //------- Scalers -------------
 
@@ -45,8 +46,11 @@ function drawGraph(data){
     .domain( [ 0, 12 ] )
     .range( [ GRAPH_Y, GRAPH_HEIGHT + GRAPH_Y ] )
 
-    //------- Content -------------
+    const yScaleAxis = d3.scaleBand()
+        .rangeRound( [GRAPH_Y, GRAPH_HEIGHT + GRAPH_Y] )
+        .domain(MONTHS)
 
+    //------- Content -------------
     const canvas = d3.select('#graph').append('svg')
         .attr('width', CANVAS_WIDTH)
         .attr('height', CANVAS_HEIGHT)
@@ -60,7 +64,7 @@ function drawGraph(data){
 
     const heatBoxAttr = heatBoxes
         .attr('width', dataInfo.blockwidth)
-        .attr('height', GRAPH_HEIGHT / 12)
+        .attr('height', dataInfo.blockheight)
         .attr('fill', d=>{
             var color = colorScale( d.variance + BASE)
             return color
@@ -74,14 +78,10 @@ function drawGraph(data){
         })
 
     //------- Axes --------------
-
-    const yAxis = d3.axisLeft()
-        .scale(yScale)
-
     const callYAxis = canvas
         .append('g')
         .attr( 'transform', 'translate( '+GRAPH_X+', 0 )' )
-        .call(yAxis)
+        .call(  d3.axisLeft( yScaleAxis )  )
 
 }
 
