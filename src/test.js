@@ -1,10 +1,10 @@
 const URL = 'https://raw.githubusercontent.com/FreeCodeCamp/ProjectReferenceData/master/global-temperature.json'
-const CANVAS_WIDTH = 1000
-const CANVAS_HEIGHT = 600
 const GRAPH_WIDTH = 700
-const GRAPH_X = 75
-const GRAPH_Y = 50
+const GRAPH_X = 100
+const GRAPH_Y = 100
 const GRAPH_HEIGHT = 400
+const CANVAS_WIDTH = GRAPH_WIDTH + GRAPH_X
+const CANVAS_HEIGHT = GRAPH_HEIGHT + GRAPH_Y + 100
 const MONTHS_PER_YEAR = 12
 const MONTHS = [ 'January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December' ]
 
@@ -81,6 +81,28 @@ function drawGraph(data){
             const x = row * dataInfo.blockwidth + GRAPH_X
             return x
         })
+
+    const titleItems = canvas
+        .append('g')
+
+    const title = titleItems.append('text')
+        .text('Global Land-Surface Temperature')
+        .attr('text-anchor', 'middle')
+        .attr('x', CANVAS_WIDTH/2)
+        .attr('font-size', '200%')
+        .attr('y', 25)
+        .attr('width', CANVAS_WIDTH)
+        .attr('height', 50)
+
+    const desc = titleItems.append('text')
+        .text('Temperatures are in Celsius and reported as anomalies relative to the Jan 1951-Dec 1980 average.')
+        .attr('text-anchor', 'middle')
+        .attr('x', CANVAS_WIDTH/2)
+        .attr('font-size', '100%')
+        .attr('y', 90)
+        .attr('width', CANVAS_WIDTH)
+        .attr('height', 50)
+
 
     //------- Axes --------------
     const callYAxis = canvas
