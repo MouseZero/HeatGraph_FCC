@@ -62,6 +62,7 @@ function drawGraph(data){
         .append('g')
 
     const heatBoxes = canvas
+        .append('g')
         .selectAll('rect')
         .data(data.monthlyVariance)
         .enter()
@@ -91,6 +92,16 @@ function drawGraph(data){
         .attr('x', CANVAS_WIDTH/2)
         .attr('font-size', '200%')
         .attr('y', 25)
+        .attr('width', CANVAS_WIDTH)
+        .attr('height', 50)
+
+
+    const years = titleItems.append('text')
+        .text('Years: 1753 - 2015')
+        .attr('text-anchor', 'middle')
+        .attr('x', CANVAS_WIDTH/2)
+        .attr('font-size', '150%')
+        .attr('y', 60)
         .attr('width', CANVAS_WIDTH)
         .attr('height', 50)
 
