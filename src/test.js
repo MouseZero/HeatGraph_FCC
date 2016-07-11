@@ -86,33 +86,27 @@ function drawGraph(data){
     const titleItems = canvas
         .append('g')
 
-    const title = titleItems.append('text')
-        .text('Global Land-Surface Temperature')
+    const commonTextSettings = return selector => selector
         .attr('text-anchor', 'middle')
         .attr('x', CANVAS_WIDTH/2)
         .attr('font-size', '200%')
-        .attr('y', 25)
         .attr('width', CANVAS_WIDTH)
         .attr('height', 50)
 
+    const title = titleItems.append('text')
+        .text('Global Land-Surface Temperature')
+        .attr('y', 25)
+        .commonTextSettings()
 
     const years = titleItems.append('text')
         .text('Years: 1753 - 2015')
-        .attr('text-anchor', 'middle')
-        .attr('x', CANVAS_WIDTH/2)
-        .attr('font-size', '150%')
         .attr('y', 60)
-        .attr('width', CANVAS_WIDTH)
-        .attr('height', 50)
+        .commonTextSettings()
 
     const desc = titleItems.append('text')
         .text('Temperatures are in Celsius and reported as anomalies relative to the Jan 1951-Dec 1980 average.')
-        .attr('text-anchor', 'middle')
-        .attr('x', CANVAS_WIDTH/2)
-        .attr('font-size', '100%')
         .attr('y', 90)
-        .attr('width', CANVAS_WIDTH)
-        .attr('height', 50)
+        .commonTextSettings()
 
 
     //------- Axes --------------

@@ -1,0 +1,45 @@
+0 info it worked if it ends with ok
+1 verbose cli [ '/usr/bin/nodejs', '/usr/bin/npm', 'run', 'make' ]
+2 info using npm@3.5.2
+3 info using node@v4.2.6
+4 verbose run-script [ 'premake', 'make', 'postmake' ]
+5 info lifecycle heat@1.0.0~premake: heat@1.0.0
+6 silly lifecycle heat@1.0.0~premake: no script for premake, continuing
+7 info lifecycle heat@1.0.0~make: heat@1.0.0
+8 verbose lifecycle heat@1.0.0~make: unsafe-perm in lifecycle true
+9 verbose lifecycle heat@1.0.0~make: PATH: /usr/share/npm/bin/node-gyp-bin:/home/pair/workspace/heat/node_modules/.bin:/usr/local/lib/node_modules/npm/bin/node-gyp-bin:/home/pair/workspace/heat/node_modules/.bin:/usr/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/home/pair/workspace/heat/node_modules/npm-watch/node_modules/.bin
+10 verbose lifecycle heat@1.0.0~make: CWD: /home/pair/workspace/heat
+11 silly lifecycle heat@1.0.0~make: Args: [ '-c', 'babel src -d dist' ]
+12 silly lifecycle heat@1.0.0~make: Returned: code: 1  signal: null
+13 info lifecycle heat@1.0.0~make: Failed to exec make script
+14 verbose stack Error: heat@1.0.0 make: `babel src -d dist`
+14 verbose stack Exit status 1
+14 verbose stack     at EventEmitter.<anonymous> (/usr/share/npm/lib/utils/lifecycle.js:232:16)
+14 verbose stack     at emitTwo (events.js:87:13)
+14 verbose stack     at EventEmitter.emit (events.js:172:7)
+14 verbose stack     at ChildProcess.<anonymous> (/usr/share/npm/lib/utils/spawn.js:24:14)
+14 verbose stack     at emitTwo (events.js:87:13)
+14 verbose stack     at ChildProcess.emit (events.js:172:7)
+14 verbose stack     at maybeClose (internal/child_process.js:821:16)
+14 verbose stack     at Process.ChildProcess._handle.onexit (internal/child_process.js:211:5)
+15 verbose pkgid heat@1.0.0
+16 verbose cwd /home/pair/workspace/heat
+17 error Linux 3.19.0-32-generic
+18 error argv "/usr/bin/nodejs" "/usr/bin/npm" "run" "make"
+19 error node v4.2.6
+20 error npm  v3.5.2
+21 error code ELIFECYCLE
+22 error heat@1.0.0 make: `babel src -d dist`
+22 error Exit status 1
+23 error Failed at the heat@1.0.0 make script 'babel src -d dist'.
+23 error Make sure you have the latest version of node.js and npm installed.
+23 error If you do, this is most likely a problem with the heat package,
+23 error not with npm itself.
+23 error Tell the author that this fails on your system:
+23 error     babel src -d dist
+23 error You can get information on how to open an issue for this project with:
+23 error     npm bugs heat
+23 error Or if that isn't available, you can get their info via:
+23 error     npm owner ls heat
+23 error There is likely additional logging output above.
+24 verbose exit [ 1, true ]
