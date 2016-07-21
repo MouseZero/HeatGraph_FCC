@@ -86,7 +86,7 @@ function drawGraph(data){
     const titleItems = canvas
         .append('g')
 
-    const commonTextSettings = return selector => selector
+    const commonTextSettings = selector => selector
         .attr('text-anchor', 'middle')
         .attr('x', CANVAS_WIDTH/2)
         .attr('font-size', '200%')
