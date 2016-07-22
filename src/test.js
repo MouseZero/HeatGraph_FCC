@@ -83,30 +83,43 @@ function drawGraph(data){
             return x
         })
 
+    const toolTip = heatBoxes
+        .append("title")
+        .text(d=>"Year: " + d.year +
+            " Month: " + MONTHS[d.month] +
+            " Temp: " +
+            ( Math.round( ( d.variance + BASE )*100 )/100) +
+            "°C")
+
     const titleItems = canvas
         .append('g')
 
-    const commonTextSettings = selector => selector
-        .attr('text-anchor', 'middle')
-        .attr('x', CANVAS_WIDTH/2)
-        .attr('font-size', '200%')
-        .attr('width', CANVAS_WIDTH)
-        .attr('height', 50)
-
     const title = titleItems.append('text')
         .text('Global Land-Surface Temperature')
-        .attr('y', 25)
-        .commonTextSettings()
+        .attr('text-anchor', 'middle')
+        .attr('y', 30)
+        .attr('x', CANVAS_WIDTH/2)
+        .attr('font-size', '150%')
+        .attr('width', CANVAS_WIDTH)
+        .attr('height', 50)
 
     const years = titleItems.append('text')
         .text('Years: 1753 - 2015')
         .attr('y', 60)
-        .commonTextSettings()
+        .attr('text-anchor', 'middle')
+        .attr('x', CANVAS_WIDTH/2)
+        .attr('font-size', '100%')
+        .attr('width', CANVAS_WIDTH)
+        .attr('height', 50)
 
     const desc = titleItems.append('text')
         .text('Temperatures are in Celsius and reported as anomalies relative to the Jan 1951-Dec 1980 average.')
         .attr('y', 90)
-        .commonTextSettings()
+        .attr('text-anchor', 'middle')
+        .attr('x', CANVAS_WIDTH/2)
+        .attr('font-size', '75%')
+        .attr('width', CANVAS_WIDTH)
+        .attr('height', 50)
 
 
     //------- Axes --------------
